@@ -1,0 +1,162 @@
+<!doctype html>
+<html lang="it">
+<head>
+  <meta charset="utf-8">
+  <title>MFC Robotics — End Effector Realistico</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <style>
+    html, body { 
+      width: 100%; 
+      height: 100%; 
+      margin: 0; 
+      background: #0b0e14; 
+      overflow: hidden; 
+      font-family: Inter, system-ui, Arial, sans-serif; 
+    }
+
+    #canvas-wrap { 
+      position: fixed; 
+      inset: 0; 
+      width: 100vw; 
+      height: 100vh; 
+      background: url('A_3D-rendered_digital_image_showcases_an_industria.png') no-repeat center center/cover; 
+      will-change: background-position, transform;
+      transform: scale(0.85); /* sfondo rimpicciolito */
+      transform-origin: center center;
+    }
+
+    /* Chele simulate */
+    .chela {
+      position: absolute;
+      width: 80px; 
+      height: 40px;
+      background: rgba(255,255,255,0.2);
+      border-radius: 20px;
+      top: 45%; 
+      transform-origin: center center;
+      animation: chelaOpenClose 1.5s ease-in-out infinite alternate;
+    }
+
+    .chela-left {
+      left: 38%;
+      transform-origin: right center;
+    }
+
+    .chela-right {
+      right: 38%;
+      transform-origin: left center;
+    }
+
+    @keyframes chelaOpenClose {
+      0% { transform: rotate(0deg); }
+      50% { transform: rotate(10deg); } /* apertura controllata */
+      100% { transform: rotate(0deg); }
+    }
+
+    .overlay { 
+      position: fixed; 
+      top: 5%; 
+      left: 0; 
+      width: 100%; 
+      display: flex; 
+      align-items: flex-start; 
+      justify-content: center; 
+      pointer-events: none; 
+      z-index: 2;
+    }
+
+    .intro { 
+      text-align: center; 
+      color: #e5e7eb; 
+      letter-spacing: 0.08em; 
+      animation: fadeIn 2s ease forwards; 
+      position: relative; 
+      z-index: 3;
+    }
+
+    .intro h1 { 
+      font-size: clamp(32px, 6vw, 72px); 
+      margin: 0 0 8px; 
+      font-weight: 600; 
+      background: linear-gradient(90deg,#0ff,#06f); 
+      -webkit-background-clip: text; 
+      -webkit-text-fill-color: transparent; 
+      animation: gradientMove 3s ease infinite alternate; 
+      background-size: 200% 200%;
+    }
+
+    .intro h2 { 
+      font-size: clamp(14px, 2vw, 22px); 
+      margin: 0 0 28px; 
+      font-weight: 300; 
+      color: #9ca3af; 
+      animation: fadeInUp 2s ease forwards; 
+      animation-delay: 1s;
+      opacity: 0;
+    }
+
+    .enter-btn { 
+      pointer-events: auto; 
+      display: inline-block; 
+      padding: 14px 36px; 
+      border: 1px solid rgba(255,255,255,0.35); 
+      color: #fff; 
+      text-decoration: none; 
+      letter-spacing: 0.15em; 
+      font-size: 14px; 
+      background: rgba(0,0,0,0.35); 
+      transition: all 0.3s ease; 
+      backdrop-filter: blur(6px); 
+    }
+
+    .enter-btn:hover { 
+      background: rgba(255,255,255,0.1); 
+      border-color: #fff; 
+      transform: translateY(-2px); 
+    }
+
+    @keyframes fadeIn { 
+      from { opacity: 0; transform: translateY(10px); } 
+      to { opacity: 1; transform: translateY(0); } 
+    }
+
+    @keyframes fadeInUp { 
+      from { opacity: 0; transform: translateY(20px); } 
+      to { opacity: 1; transform: translateY(0); } 
+    }
+
+    @keyframes gradientMove { 
+      0% { background-position: 0% 50%; } 
+      100% { background-position: 100% 50%; } 
+    }
+  </style>
+</head>
+<body>
+  <div id="canvas-wrap">
+    <!-- Chele robot animate -->
+    <div class="chela chela-left"></div>
+    <div class="chela chela-right"></div>
+  </div>
+
+  <div class="overlay">
+    <div class="intro">
+      <h1>MFC ROBOTICS</h1>
+      <h2>Industrial Automation · End Effectors · Robotics</h2>
+      <a href="https://www.mfcrobotics.com" class="enter-btn" role="button" aria-label="Entra nel sito MFC Robotics">ENTRA NEL SITO</a>
+    </div>
+  </div>
+
+  <script>
+    const canvasWrap = document.getElementById('canvas-wrap');
+    let t = 0;
+    function animateBackground(){
+      t += 0.004;
+      const y = Math.sin(t) * 8;
+      const x = Math.sin(t*0.7) * 8;
+      canvasWrap.style.backgroundPosition = `${50 + x/10}% ${50 + y/10}%`;
+      requestAnimationFrame(animateBackground);
+    }
+    animateBackground();
+  </script>
+</body>
+</html>
